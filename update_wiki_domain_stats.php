@@ -36,16 +36,15 @@ $content[] = "| '''" . round($domainResultSet["totalStorage"] / 1024, 1) . " TB 
 $content[] = "|}";
 $content[] = "";
 
-$pagContent = implode("\n", $content);
+$hashLock = md5(implode("\n", $content));
 
 $content[] = "Automatisch geupdatet von [[Benutzer:Matebot]] am: " . date("Y-m-d H:i:s");
 $content[] = "";
 
 $hashLockFile = 'last_page_hash.txt';
-$hashLock     = md5($pageContent);
 
 if(!file_exists($hashLockFile) || file_get_contents($hashLockFile) != $hashLock) {
-    publishToWiki($wikiURI, $wikiUsername, $wikiPassword, $wikiPage, $wikiSection, $pageContent);
+    publishToWiki($wikiURI, $wikiUsername, $wikiPassword, $wikiPage, $wikiSection, implode("\n", $content));
     file_put_contents($hashLockFile, $hashLock);
 }
 
