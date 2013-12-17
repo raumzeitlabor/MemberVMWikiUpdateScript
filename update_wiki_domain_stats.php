@@ -39,10 +39,12 @@ $content[] = "Automatisch geupdatet von [[Benutzer:Matebot]] am: " . date("Y-m-d
 $content[] = "";
 
 $hashLockFile = 'last_page_hash.txt';
-$hashLock     = md5($wikiPage);
+
+$pagContent = implode("\n", $content);
+$hashLock     = md5($pageContent);
 
 if(!file_exists($hashLockFile) || file_get_contents($hashLockFile) != $hashLock) {
-    publishToWiki($wikiURI, $wikiUsername, $wikiPassword, $wikiPage, $wikiSection, implode("\n", $content));
+    publishToWiki($wikiURI, $wikiUsername, $wikiPassword, $wikiPage, $wikiSection, $pageContent);
     file_put_contents($hashLockFile, $hashLock);
 }
 
