@@ -185,6 +185,7 @@ function publishToWiki ($apiURI, $username, $password, $page, $section, $content
         $wikipedia->section($foundSection);
         $wikipedia->summary('Updated VM list');
         $wikipedia->text($content);
+        $wikipedia->bot(true);
         $wikipedia->token($edittoken);
 
         $result = $wikipedia->post();
