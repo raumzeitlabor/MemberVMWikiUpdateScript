@@ -35,12 +35,13 @@ $content[] = "| '''" . round($domainResultSet["totalStorage"] / 1024, 1) . " TB 
     ) . " TB (" . $percentStorage . "% belegt)'''";
 $content[] = "|}";
 $content[] = "";
+
+$pagContent = implode("\n", $content);
+
 $content[] = "Automatisch geupdatet von [[Benutzer:Matebot]] am: " . date("Y-m-d H:i:s");
 $content[] = "";
 
 $hashLockFile = 'last_page_hash.txt';
-
-$pagContent = implode("\n", $content);
 $hashLock     = md5($pageContent);
 
 if(!file_exists($hashLockFile) || file_get_contents($hashLockFile) != $hashLock) {
