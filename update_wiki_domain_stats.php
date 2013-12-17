@@ -38,7 +38,13 @@ $content[] = "";
 $content[] = "Automatisch geupdatet von [[Benutzer:Matebot]] am: " . date("Y-m-d H:i:s");
 $content[] = "";
 
-publishToWiki($wikiURI, $wikiUsername, $wikiPassword, $wikiPage, $wikiSection, implode("\n", $content));
+$hashLockFile = 'last_page_hash.txt';
+$hashLock     = md5($wikiPage);
+
+if(!file_exists($hashLockFile) || file_get_contents($hashLockFile) != $hashLock) {
+    publishToWiki($wikiURI, $wikiUsername, $wikiPassword, $wikiPage, $wikiSection, implode("\n", $content));
+    file_put_contents($hashLockFile, $hashLock);
+}
 
 /**
  * Returns an associative array with all running domains, their memory- and storage consumption.
